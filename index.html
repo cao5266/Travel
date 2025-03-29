@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>旅游网站</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="敦煌莫高窟旅游宣传网站，探索世界文化遗产的艺术瑰宝">
+    <meta name="keywords" content="敦煌,莫高窟,旅游,文化遗产,壁画,佛教艺术,丝绸之路">
+    <title>敦煌莫高窟 - 丝绸之路上的艺术明珠</title>
     <style>
         /* 全局样式 */
         * {
@@ -11,391 +14,2093 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'SimHei', 'Microsoft YaHei', sans-serif;
             line-height: 1.6;
             color: #333;
-            background-color: #f5f5f5;
+            background-color: #f9f6f0;
+            overflow-x: hidden;
         }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
         a {
             text-decoration: none;
-            color: inherit;
+            color: #8c6239;
+            transition: color 0.3s;
         }
-        
-        /* 头部导航 */
-        header {
-            background-color: #3498db;
-            color: white;
-            padding: 15px;
-            position: sticky;
+
+        a:hover {
+            color: #c19b6c;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 60px 0;
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            transition: none;
+        }
+
+        .section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero {
+            display: flex;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: #8c6239;
+            font-size: 2.5rem;
+            position: relative;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, #c19b6c 0%, #8c6239 100%);
+            margin: 20px auto 10px;
+            border-radius: 2px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            position: fixed;
             top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
         }
-        .header-top {
+
+        .navbar.scrolled {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 15px 20px;
         }
+
         .logo {
-            font-size: 24px;
+            font-size: 1.8rem;
             font-weight: bold;
+            color: #8c6239;
         }
-        .nav-toggle {
-            font-size: 20px;
+
+        .logo img {
+            height: 40px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
         }
-        .search-bar {
-            margin-top: 10px;
+
+        .nav-links {
             display: flex;
+            list-style: none;
         }
-        .search-bar input {
-            width: 80%;
-            padding: 8px;
-            border: none;
-            border-radius: 4px 0 0 4px;
+
+        .nav-links li {
+            margin-left: 25px;
         }
-        .search-bar button {
-            width: 20%;
-            padding: 8px;
-            background-color: #2980b9;
-            color: white;
-            border: none;
-            border-radius: 0 4px 4px 0;
-        }
-        
-        /* 轮播图 */
-        .carousel {
+
+        .nav-links a {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 5px 0;
             position: relative;
-            height: 200px;
-            overflow: hidden;
         }
-        .carousel-inner {
-            height: 100%;
-        }
-        .carousel-item {
-            height: 100%;
-            display: none;
-        }
-        .carousel-item.active {
-            display: block;
-        }
-        .carousel-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .carousel-caption {
+
+        .nav-links a::after {
+            content: "";
             position: absolute;
             bottom: 0;
             left: 0;
-            right: 0;
-            background-color: rgba(0,0,0,0.5);
-            color: white;
-            padding: 10px;
-            text-align: center;
+            width: 0;
+            height: 2px;
+            background-color: #c19b6c;
+            transition: width 0.3s;
         }
-        
-        /* 分类导航 */
-        .categories {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: #8c6239;
+            transition: all 0.3s ease;
+        }
+
+        /* 响应式导航 */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: rgba(255, 255, 255, 0.98);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 15px 0;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .mobile-menu.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .mobile-menu.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .mobile-menu.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+
+        /* 英雄区域样式 */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('https://picsum.photos/528/398') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            letter-spacing: 8px;
+            font-weight: bold;
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 35px;
+            background: linear-gradient(135deg, #8c6239 0%, #c19b6c 100%);
+            color: white;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #c19b6c 0%, #8c6239 100%);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            display: flex;
+            /* flex-direction: column; */
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(140, 98, 57, 0.7);
+            padding: 0px 22px;
+            border-radius: 30px;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .scroll-down .arrow {
+            margin-top: 8px;
+            font-size: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-down:hover {
+            background-color: rgba(140, 98, 57, 0.9);
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* 历史部分样式 */
+        .history-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 60px;
+            align-items: center;
+        }
+
+        .history-image {
+            flex: 1;
+            min-width: 300px;
+            transform: perspective(1000px) rotateY(3deg);
+            transition: all 0.5s;
+        }
+
+        .history-image:hover {
+            transform: perspective(1000px) rotateY(0);
+        }
+
+        .history-image img {
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s;
+        }
+
+        .history-image img:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .image-caption {
+            font-style: italic;
+            text-align: center;
+            margin-top: 15px;
+            color: #777;
+            font-size: 0.95rem;
+        }
+
+        .history-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .history-text p {
+            margin-bottom: 20px;
+            text-align: justify;
+            line-height: 1.9;
+            font-size: 1.05rem;
+            color: #444;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto 0;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #c19b6c;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background-color: #8c6239;
+            border-radius: 50%;
+            position: absolute;
+            right: -10px;
+            top: 15px;
+            z-index: 10;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -10px;
+        }
+
+        .timeline-content {
             padding: 15px;
             background-color: white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .category-item {
+
+        .timeline-content h3 {
+            margin-bottom: 10px;
+            color: #8c6239;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 40px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 20px;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+
+            .timeline-dot {
+                left: 30px;
+                right: auto;
+            }
+
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: 30px;
+            }
+        }
+
+        /* 洞窟部分样式 */
+        .caves {
+            background-color: #f0e9df;
+        }
+
+        .caves-intro {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .caves-slider-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .caves-slider {
+            position: relative;
+            height: 500px;
+        }
+
+        .cave-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 10px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            overflow: hidden;
         }
-        .category-icon {
-            width: 50px;
-            height: 50px;
-            background-color: #f1c40f;
-            border-radius: 50%;
+
+        .cave-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .cave-image {
+            height: 250px;
+            overflow: hidden;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .cave-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .cave-slide:hover .cave-image img {
+            transform: scale(1.05);
+        }
+
+        .cave-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            flex-grow: 1;
+        }
+
+        .cave-content h3 {
+            color: #8c6239;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .cave-content p {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .slider-nav {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 5px;
+            margin-top: 20px;
         }
-        
-        /* 特价商品 */
-        .deals {
-            padding: 15px;
-        }
-        .section-title {
-            margin-bottom: 10px;
+
+        .prev-btn,
+        .next-btn {
+            background-color: #8c6239;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
         }
-        .view-all {
-            color: #3498db;
-            font-size: 14px;
+
+        .prev-btn:hover,
+        .next-btn:hover {
+            background-color: #c19b6c;
         }
-        .deals-grid {
+
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            margin: 0 15px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dot.active {
+            background-color: #8c6239;
+        }
+
+        @media (max-width: 768px) {
+            .caves-slider {
+                height: 600px;
+            }
+        }
+
+        /* 艺术特色部分样式 */
+        .art-intro {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .art-features {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            perspective: 1000px;
         }
-        .deal-card {
+
+        .art-card {
             background-color: white;
-            border-radius: 8px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .deal-image {
-            height: 120px;
-            overflow: hidden;
-        }
-        .deal-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .deal-info {
-            padding: 10px;
-        }
-        .deal-title {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .deal-price {
-            color: #e74c3c;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .deal-rating {
-            color: #f39c12;
-            margin-bottom: 5px;
-        }
-        .deal-location {
-            font-size: 12px;
-            color: #7f8c8d;
-        }
-        
-        /* 热门目的地 */
-        .destinations {
-            padding: 15px;
-        }
-        .destinations-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-        .destination-card {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s;
             position: relative;
-            height: 150px;
-            border-radius: 8px;
+            transform: translateZ(0);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .art-card:hover {
+            transform: translateY(-10px) rotateY(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .art-image {
+            height: 230px;
             overflow: hidden;
+            position: relative;
         }
-        .destination-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .destination-info {
+
+        .art-image::after {
+            content: '';
             position: absolute;
             bottom: 0;
             left: 0;
-            right: 0;
-            background-color: rgba(0,0,0,0.5);
-            color: white;
-            padding: 10px;
+            width: 100%;
+            height: 30%;
+            background: linear-gradient(to top, rgba(255, 255, 255, 0.2), transparent);
+            z-index: 1;
         }
-        .destination-name {
-            font-weight: bold;
-            margin-bottom: 5px;
+
+        .art-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s;
         }
-        .destination-desc {
-            font-size: 12px;
+
+        .art-card:hover .art-image img {
+            transform: scale(1.1);
         }
-        
-        /* 底部导航 */
-        footer {
-            position: fixed;
+
+        .art-info {
+            padding: 25px;
+        }
+
+        .art-info h3 {
+            color: #8c6239;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .art-info h3::after {
+            content: '';
+            position: absolute;
             bottom: 0;
             left: 0;
-            right: 0;
-            background-color: white;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            padding: 10px 0;
-            box-shadow: 0 -1px 3px rgba(0,0,0,0.1);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, #c19b6c, transparent);
+            border-radius: 3px;
         }
-        .footer-item {
+
+        .art-info p {
+            margin-bottom: 25px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .learn-more {
+            background: linear-gradient(135deg, rgba(140, 98, 57, 0.1) 0%, rgba(193, 155, 108, 0.1) 100%);
+            border: 2px solid #8c6239;
+            color: #8c6239;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s;
+            letter-spacing: 1px;
+        }
+
+        .learn-more:hover {
+            background: linear-gradient(135deg, #8c6239 0%, #c19b6c 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(140, 98, 57, 0.3);
+        }
+
+        .art-details {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            box-sizing: border-box;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            overflow-y: auto;
+            transform: translateY(20px);
+            border-radius: 8px;
+        }
+
+        .art-details.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .art-details h4 {
+            color: #8c6239;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .art-details p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .art-details::after {
+            content: "×";
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: #8c6239;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .art-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 参观体验部分样式 */
+        .experience {
+            background-color: #f0e9df;
+        }
+
+        .experience-intro {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .video-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 50px;
+            align-items: center;
+        }
+
+        .video-container {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container video {
+            width: 100%;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .video-overlay:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .play-btn {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(140, 98, 57, 0.9);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+            background-color: rgba(193, 155, 108, 0.9);
+        }
+
+        .video-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .video-info h3 {
+            color: #8c6239;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .video-info p {
+            line-height: 1.8;
+        }
+
+        .experience-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #8c6239;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            line-height: 1.7;
+        }
+
+        .visit-tips {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .visit-tips h3 {
+            color: #8c6239;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .visit-tips ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        .visit-tips li {
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .video-section {
+                flex-direction: column;
+            }
+
+            .video-info {
+                margin-top: 20px;
+            }
+        }
+
+        /* 留言板部分样式 */
+        .message-board {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .message-form {
+            flex: 1;
+            min-width: 320px;
+            background: linear-gradient(135deg, white 0%, #f9f6f0 100%);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transform: translateZ(0);
+            transition: all 0.4s;
+        }
+
+        .message-form:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .message-list {
+            flex: 1;
+            min-width: 320px;
+        }
+
+        .message-form h3,
+        .message-list h3 {
+            color: #8c6239;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .message-form h3::after,
+        .message-list h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #c19b6c, transparent);
+            border-radius: 3px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+            font-size: 1.05rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #c19b6c;
+            box-shadow: 0 0 10px rgba(193, 155, 108, 0.3);
+            outline: none;
+            background-color: white;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .rating-stars {
+            display: flex;
+            font-size: 28px;
+            color: #ddd;
+            margin-top: 5px;
+        }
+
+        .star {
+            cursor: pointer;
+            transition: color 0.3s, transform 0.2s;
+            margin-right: 5px;
+        }
+
+        .star:hover {
+            transform: scale(1.2);
+        }
+
+        .star.active {
+            color: #f8ce0b;
+            text-shadow: 0 0 5px rgba(248, 206, 11, 0.5);
+        }
+
+        .messages {
             display: flex;
             flex-direction: column;
+            gap: 25px;
+        }
+
+        .message {
+            background: linear-gradient(135deg, white 0%, #f9f6f0 100%);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transform: translateZ(0);
+            transition: all 0.4s;
+        }
+
+        .message:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+            transform: translateY(-5px);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .message-author {
+            display: flex;
             align-items: center;
-            font-size: 12px;
         }
-        .footer-icon {
-            margin-bottom: 5px;
-            font-size: 20px;
+
+        .message-author h4 {
+            margin-right: 10px;
+            color: #8c6239;
         }
-        .content {
-            margin-bottom: 60px; /* 为底部导航留出空间 */
+
+        .message-rating {
+            color: #f8ce0b;
+            font-size: 14px;
+        }
+
+        .message-date {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .message-content p {
+            line-height: 1.7;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .page-btn:hover,
+        .page-btn.active {
+            background-color: #8c6239;
+            color: white;
+            border-color: #8c6239;
+        }
+
+        /* 页脚样式 */
+        .footer {
+            background: linear-gradient(180deg, #333 0%, #222 100%);
+            color: #eee;
+            padding: 70px 0 30px;
+            border-top: 5px solid #8c6239;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-about,
+        .footer-links,
+        .footer-contact {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer h3 {
+            color: #c19b6c;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .footer h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, #c19b6c, transparent);
+            border-radius: 3px;
+        }
+
+        .footer p,
+        .footer li {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .footer-links ul,
+        .footer-contact ul {
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: #eee;
+            transition: all 0.3s;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .footer-links a::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #c19b6c;
+            padding-left: 20px;
+        }
+
+        .footer-links a:hover::before {
+            left: 5px;
+            color: #c19b6c;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #555;
+            padding-top: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            color: #eee;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .social-icon:hover {
+            color: #c19b6c;
+        }
+
+        @media (max-width: 768px) {
+            .message-board {
+                flex-direction: column;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* 删除切换按钮相关样式 */
+        /* 下一部分按钮样式 */
+        .next-section-btn-container {
+            display: none;
+        }
+
+        /* 当前部分标题 */
+        .current-section-title {
+            display: none;
         }
     </style>
 </head>
+
 <body>
-    <header>
-        <div class="header-top">
-            <div class="logo">旅游网</div>
-            <div class="nav-toggle">☰</div>
+    <!-- 导航栏
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="#" class="logo">敦煌莫高窟</a>
+            <div class="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#history">历史</a></li>
+                <li><a href="#caves">洞窟</a></li>
+                <li><a href="#art">艺术</a></li>
+                <li><a href="#reviews">留言</a></li>
+            </ul>
         </div>
-        <div class="search-bar">
-            <input type="text" placeholder="搜索目的地、酒店、景点...">
-            <button>搜索</button>
+    </nav> -->
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">敦煌莫高窟</h1>
+            <p class="hero-subtitle">丝绸之路上的艺术明珠，中国文化的瑰宝</p>
+            <a href="#history" class="btn">探索历史</a>
         </div>
-    </header>
-    
-    <div class="content">
-        <div class="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="https://via.placeholder.com/600x200?text=三亚海滩" alt="三亚海滩">
-                    <div class="carousel-caption">三亚海滩 - 限时特惠</div>
+        <!-- <div class="scroll-down" id="scrollDown">
+            <span>继续探索敦煌之美</span>
+            <span class="arrow">↓</span>
+        </div> -->
+    </section>
+
+    <!-- 历史渊源部分 -->
+    <section class="section history" id="history">
+        <div class="container">
+            <h2 class="section-title">历史渊源</h2>
+            <div class="history-content">
+                <div class="history-image">
+                    <img src="https://picsum.photos/528/398" alt="莫高窟历史图片">
+                    <p class="image-caption">莫高窟始建于公元366年，历经千年岁月的洗礼</p>
                 </div>
-                <!-- 更多轮播项 -->
+                <div class="history-text">
+                    <p>莫高窟，也被称为"千佛洞"，位于中国甘肃省敦煌市东南25公里处的鸣沙山东麓断崖上。它始建于十六国的前秦时期，历经北魏、西魏、北周、隋、唐、五代、西夏、元等历代的兴建，形成庞大的规模。</p>
+                    <p>据记载，公元366年，一位名叫乐僔的僧人途经此地，见一座山，金光闪耀，如同千佛，于是就在此处开凿了第一个洞窟。从此，这里成为了佛教艺术的圣地。</p>
+                    <p>莫高窟作为丝绸之路上的重要节点，汇聚了多元文化的精华。隋唐时期是莫高窟发展的鼎盛时期，当时开凿的洞窟数量最多，艺术成就最高。</p>
+                    <p>20世纪初，莫高窟藏经洞的发现，出土了大量珍贵的古代文物，包括佛教经典、世俗文学、历史和艺术作品等，对研究古代中国和中亚的历史、宗教和文化具有极其重要的价值。</p>
+                </div>
             </div>
-        </div>
-        
-        <div class="categories">
-            <div class="category-item">
-                <div class="category-icon">✈️</div>
-                <div>机票</div>
-            </div>
-            <div class="category-item">
-                <div class="category-icon">🏨</div>
-                <div>酒店</div>
-            </div>
-            <div class="category-item">
-                <div class="category-icon">🎫</div>
-                <div>景点</div>
-            </div>
-            <div class="category-item">
-                <div class="category-icon">🚗</div>
-                <div>租车</div>
-            </div>
-        </div>
-        
-        <div class="deals">
-            <div class="section-title">
-                <h3>限时特惠</h3>
-                <a href="#" class="view-all">查看全部</a>
-            </div>
-            <div class="deals-grid">
-                <div class="deal-card">
-                    <div class="deal-image">
-                        <img src="https://via.placeholder.com/300x150?text=三亚酒店" alt="三亚酒店">
-                    </div>
-                    <div class="deal-info">
-                        <div class="deal-title">三亚海景酒店</div>
-                        <div class="deal-price">¥688/晚</div>
-                        <div class="deal-rating">★★★★☆ 4.8</div>
-                        <div class="deal-location">海南省三亚市</div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>366年</h3>
+                        <p>僧人乐僔在此开凿第一个洞窟，莫高窟正式创建</p>
                     </div>
                 </div>
-                <div class="deal-card">
-                    <div class="deal-image">
-                        <img src="https://via.placeholder.com/300x150?text=丽江古城" alt="丽江古城">
-                    </div>
-                    <div class="deal-info">
-                        <div class="deal-title">丽江古城一日游</div>
-                        <div class="deal-price">¥299/人</div>
-                        <div class="deal-rating">★★★★★ 5.0</div>
-                        <div class="deal-location">云南省丽江市</div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>618-907年</h3>
+                        <p>唐代时期，莫高窟艺术创作达到顶峰，开凿了大量精美洞窟</p>
                     </div>
                 </div>
-                <div class="deal-card">
-                    <div class="deal-image">
-                        <img src="https://via.placeholder.com/300x150?text=北京故宫" alt="北京故宫">
-                    </div>
-                    <div class="deal-info">
-                        <div class="deal-title">故宫博物院门票</div>
-                        <div class="deal-price">¥120/人</div>
-                        <div class="deal-rating">★★★★☆ 4.7</div>
-                        <div class="deal-location">北京市东城区</div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>1900年</h3>
+                        <p>道士王圆箓发现藏经洞，出土大量珍贵历史文物</p>
                     </div>
                 </div>
-                <div class="deal-card">
-                    <div class="deal-image">
-                        <img src="https://via.placeholder.com/300x150?text=张家界" alt="张家界">
-                    </div>
-                    <div class="deal-info">
-                        <div class="deal-title">张家界森林公园</div>
-                        <div class="deal-price">¥245/人</div>
-                        <div class="deal-rating">★★★★☆ 4.6</div>
-                        <div class="deal-location">湖南省张家界市</div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>1987年</h3>
+                        <p>莫高窟被联合国教科文组织列入世界文化遗产名录</p>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div class="destinations">
-            <div class="section-title">
-                <h3>热门目的地</h3>
-                <a href="#" class="view-all">更多</a>
+    </section>
+
+    <!-- 经典洞窟部分 -->
+    <section class="section caves" id="caves">
+        <div class="container">
+            <h2 class="section-title">经典洞窟</h2>
+            <div class="caves-intro">
+                <p>莫高窟现存洞窟492个，壁画45000多平方米，彩塑2000多身，是世界上现存规模最大、内容最丰富的佛教艺术圣地。以下是几处最具代表性的洞窟，让我们一起探索这些艺术瑰宝。</p>
             </div>
-            <div class="destinations-grid">
-                <div class="destination-card">
-                    <img src="https://via.placeholder.com/300x150?text=北京" alt="北京">
-                    <div class="destination-info">
-                        <div class="destination-name">北京</div>
-                        <div class="destination-desc">历史文化名城，古都风采</div>
+
+            <div class="caves-slider-container">
+                <div class="caves-slider">
+                    <div class="cave-slide active" id="cave1">
+                        <div class="cave-image">
+                            <img src="https://picsum.photos/528/398" alt="第17窟">
+                        </div>
+                        <div class="cave-content">
+                            <h3>第17窟（唐代）</h3>
+                            <p>这个洞窟是莫高窟的藏经洞，1900年被道士王圆箓发现。藏经洞内藏有50000多件文物，包括佛教经卷、世俗文献、纺织品和艺术品等，是20世纪最重要的考古发现之一。</p>
+                            <p>藏经洞文物的发现揭示了古代丝绸之路的文化交流，对研究中国和中亚的历史、艺术、宗教和社会生活提供了宝贵的资料。</p>
+                        </div>
+                    </div>
+                    <div class="cave-slide" id="cave2">
+                        <div class="cave-image">
+                            <img src="https://picsum.photos/528/398" alt="第45窟">
+                        </div>
+                        <div class="cave-content">
+                            <h3>第45窟（唐代）</h3>
+                            <p>这个洞窟以其庞大的佛像和精美的壁画而闻名。中心的大佛像高达26米，是莫高窟最高大的佛像之一，展现了唐代佛教艺术的辉煌成就。</p>
+                            <p>洞窟壁画以鲜艳的色彩和精细的笔法描绘了佛教故事和当时的社会生活场景，反映了盛唐时期的艺术风格和审美观念。</p>
+                        </div>
+                    </div>
+                    <div class="cave-slide" id="cave3">
+                        <div class="cave-image">
+                            <img src="https://picsum.photos/528/398" alt="第257窟">
+                        </div>
+                        <div class="cave-content">
+                            <h3>第257窟（北魏）</h3>
+                            <p>这是莫高窟现存最早的洞窟之一，开凿于北魏时期（约公元5世纪）。洞窟保存了早期佛教艺术风格，壁画中的人物形象修长优雅，展现了魏晋时期的审美特点。</p>
+                            <p>壁画内容主要描绘佛陀的生平故事和本生故事，艺术风格受到了印度和中亚艺术的影响，体现了早期佛教艺术的特色。</p>
+                        </div>
+                    </div>
+                    <div class="cave-slide" id="cave4">
+                        <div class="cave-image">
+                            <img src="https://picsum.photos/528/398" alt="第85窟">
+                        </div>
+                        <div class="cave-content">
+                            <h3>第85窟（唐代）</h3>
+                            <p>这个洞窟以其精美的彩塑和壁画而著名。洞内的塑像栩栩如生，色彩艳丽，展现了唐代雕塑艺术的高超技艺。</p>
+                            <p>壁画内容丰富多样，包括佛教题材和世俗生活场景，如乐舞、狩猎等，反映了唐代社会的繁荣景象和开放包容的文化氛围。</p>
+                        </div>
                     </div>
                 </div>
-                <div class="destination-card">
-                    <img src="https://via.placeholder.com/300x150?text=上海" alt="上海">
-                    <div class="destination-info">
-                        <div class="destination-name">上海</div>
-                        <div class="destination-desc">现代化国际大都市</div>
+
+                <div class="slider-nav">
+                    <button class="prev-btn" id="prevCave">&lt;</button>
+                    <div class="slider-dots">
+                        <span class="dot active" data-slide="0"></span>
+                        <span class="dot" data-slide="1"></span>
+                        <span class="dot" data-slide="2"></span>
+                        <span class="dot" data-slide="3"></span>
+                    </div>
+                    <button class="next-btn" id="nextCave">&gt;</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 艺术特色部分 -->
+    <section class="section art" id="art">
+        <div class="container">
+            <h2 class="section-title">艺术特色</h2>
+            <div class="art-intro">
+                <p>莫高窟是中国古代艺术的宝库，其壁画和彩塑展现了从十六国到元代近千年间的艺术风格变迁，反映了中国佛教艺术的发展历程，也记录了古代中国社会生活的方方面面。</p>
+            </div>
+
+            <div class="art-features">
+                <div class="art-card">
+                    <div class="art-image">
+                        <img src="https://picsum.photos/528/398" alt="飞天">
+                    </div>
+                    <div class="art-info">
+                        <h3>飞天</h3>
+                        <p>飞天是莫高窟壁画中最具代表性的形象之一，描绘了天宫中散花、奏乐的仙女形象。唐代飞天形象最为丰富多彩，动态优美，体现了当时艺术家高超的绘画技巧。</p>
+                        <button class="learn-more" data-target="flying">了解更多</button>
+                    </div>
+                    <div class="art-details" id="flying-details">
+                        <h4>飞天艺术的演变</h4>
+                        <p>莫高窟的飞天形象从北魏到唐代经历了风格上的巨大变化。早期的飞天形象受印度和中亚艺术影响，体态修长，衣饰飘逸；唐代的飞天则更加丰满，动态更加自然流畅，展现了中国化的审美特点。</p>
+                        <p>飞天形象不仅是装饰性的艺术元素，也体现了佛教中"天人"的概念，象征着人与神佛之间的沟通媒介。莫高窟现存壁画中共有4500多身飞天形象，是研究中国古代绘画艺术和服饰文化的重要资料。</p>
                     </div>
                 </div>
-                <div class="destination-card">
-                    <img src="https://via.placeholder.com/300x150?text=广州" alt="广州">
-                    <div class="destination-info">
-                        <div class="destination-name">广州</div>
-                        <div class="destination-desc">美食之都，岭南文化</div>
+
+                <div class="art-card">
+                    <div class="art-image">
+                        <img src="https://picsum.photos/528/398" alt="彩塑">
+                    </div>
+                    <div class="art-info">
+                        <h3>彩塑</h3>
+                        <p>莫高窟保存了2000多身彩塑，是世界上现存规模最大、保存最完好的佛教彩塑艺术宝库。这些彩塑形象生动，色彩艳丽，展现了古代雕塑艺术的高超技艺。</p>
+                        <button class="learn-more" data-target="sculptures">了解更多</button>
+                    </div>
+                    <div class="art-details" id="sculptures-details">
+                        <h4>彩塑的制作工艺</h4>
+                        <p>莫高窟彩塑主要采用泥胎彩绘的技法制作。首先用木架或草把制作骨架，再裹以草泥，塑造大体形象，然后涂抹细泥进行细部塑造，最后进行彩绘。</p>
+                        <p>唐代的彩塑艺术成就最高，造型丰满圆润，面容祥和，色彩绚丽多彩。第96窟的卧佛、第158窟的维摩诘像和第45窟的大佛都是莫高窟彩塑艺术的代表作，展现了唐代雕塑艺术的辉煌成就。</p>
                     </div>
                 </div>
-                <div class="destination-card">
-                    <img src="https://via.placeholder.com/300x150?text=成都" alt="成都">
-                    <div class="destination-info">
-                        <div class="destination-name">成都</div>
-                        <div class="destination-desc">休闲之都，熊猫之乡</div>
+
+                <div class="art-card">
+                    <div class="art-image">
+                        <img src="https://picsum.photos/528/398" alt="壁画">
+                    </div>
+                    <div class="art-info">
+                        <h3>壁画</h3>
+                        <p>莫高窟壁画总面积达45000多平方米，内容包括佛教故事、经变画、供养人像以及反映当时社会生活的世俗题材，是研究中国古代社会历史和艺术的宝贵资料。</p>
+                        <button class="learn-more" data-target="murals">了解更多</button>
+                    </div>
+                    <div class="art-details" id="murals-details">
+                        <h4>壁画的主题与技法</h4>
+                        <p>莫高窟壁画的主题丰富多样，主要包括佛教人物、佛教故事、经变画和世俗题材等。其中，经变画是根据佛经内容绘制的大型画卷，如《维摩诘经变》、《涅槃经变》等，构图复杂，人物众多，场面宏大。
+                        </p>
+                        <p>壁画采用的主要技法是粉本临摹和粉线描绘。先在地仗上画出粉线稿，然后填上色彩，最后用墨线勾勒轮廓。唐代壁画色彩明快艳丽，人物形象生动传神，构图严谨而又灵活多变，达到了中国古代壁画艺术的巅峰。
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <footer>
-        <div class="footer-item">
-            <div class="footer-icon">🏠</div>
-            <div>首页</div>
+    </section>
+
+    <!-- 参观体验部分 -->
+    <!-- 此部分已移除 -->
+
+    <!-- 留言板部分 -->
+    <section class="section reviews" id="reviews">
+        <div class="container">
+            <h2 class="section-title">游客留言</h2>
+            <div class="message-board">
+                <div class="message-form">
+                    <h3>分享您的体验</h3>
+                    <form id="messageForm">
+                        <div class="form-group">
+                            <label for="name">您的昵称</label>
+                            <input type="text" id="name" placeholder="请输入您的昵称" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">电子邮箱（选填）</label>
+                            <input type="email" id="email" placeholder="请输入您的电子邮箱">
+                        </div>
+                        <div class="form-group">
+                            <label for="rating">评分</label>
+                            <div class="rating-stars">
+                                <span class="star" data-rating="1">★</span>
+                                <span class="star" data-rating="2">★</span>
+                                <span class="star" data-rating="3">★</span>
+                                <span class="star" data-rating="4">★</span>
+                                <span class="star" data-rating="5">★</span>
+                                <input type="hidden" id="rating" value="5">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">留言内容</label>
+                            <textarea id="message" placeholder="分享您对敦煌莫高窟的感受和建议..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn">提交留言</button>
+                    </form>
+                </div>
+
+                <div class="message-list">
+                    <h3>游客评价</h3>
+                    <div class="messages" id="messageContainer">
+                        <!-- 动态加载的留言将显示在这里 -->
+                        <div class="message">
+                            <div class="message-header">
+                                <div class="message-author">
+                                    <h4>李明</h4>
+                                    <div class="message-rating">★★★★★</div>
+                                </div>
+                                <div class="message-date">2023-05-10</div>
+                            </div>
+                            <div class="message-content">
+                                <p>莫高窟的壁画和彩塑实在是太震撼了！导游的讲解非常专业，让我更深入地了解了敦煌文化的魅力。唯一的建议是可以增加一些互动体验环节，让参观更加生动有趣。</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="message-header">
+                                <div class="message-author">
+                                    <h4>张华</h4>
+                                    <div class="message-rating">★★★★☆</div>
+                                </div>
+                                <div class="message-date">2023-04-22</div>
+                            </div>
+                            <div class="message-content">
+                                <p>第一次来敦煌，被莫高窟的艺术震撼到了。数字展示中心的4K巨幕电影非常棒，让我对敦煌有了更全面的认识。建议大家一定要提前预约，旺季人很多！</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="message-header">
+                                <div class="message-author">
+                                    <h4>王芳</h4>
+                                    <div class="message-rating">★★★★★</div>
+                                </div>
+                                <div class="message-date">2023-03-15</div>
+                            </div>
+                            <div class="message-content">
+                                <p>这是我第二次来莫高窟，每次来都有新的感受。洞窟内壁画的细节非常精美，彩塑的表情栩栩如生。工作人员很热情，讲解也很专业。强烈推荐文化爱好者来参观！</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pagination" id="pagination">
+                        <button class="page-btn" data-page="1">1</button>
+                        <button class="page-btn" data-page="2">2</button>
+                        <button class="page-btn" data-page="3">3</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="footer-item">
-            <div class="footer-icon">🔍</div>
-            <div>发现</div>
+    </section>
+
+    <!-- 页脚部分 -->
+    <!-- <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3>关于莫高窟</h3>
+                    <p>莫高窟，又称千佛洞，位于中国甘肃省敦煌市，是世界上现存规模最大、内容最丰富的佛教艺术宝库，1987年被列入世界文化遗产名录。</p>
+                </div>
+                <div class="footer-links">
+                    <h3>快速链接</h3>
+                    <ul>
+                        <li><a href="#home">首页</a></li>
+                        <li><a href="#history">历史</a></li>
+                        <li><a href="#caves">洞窟</a></li>
+                        <li><a href="#art">艺术</a></li>
+                        <li><a href="#reviews">留言</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>联系方式</h3>
+                    <ul>
+                        <li>地址：中国甘肃省敦煌市莫高窟</li>
+                        <li>电话：0937-8869852</li>
+                        <li>邮箱：info@dunhuang-mogaoku.com</li>
+                        <li>官网：www.dha.ac.cn</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 敦煌莫高窟官方网站 | 网站设计：文化传承团队</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">微信</a>
+                    <a href="#" class="social-icon">微博</a>
+                    <a href="#" class="social-icon">抖音</a>
+                </div>
+            </div>
         </div>
-        <div class="footer-item">
-            <div class="footer-icon">🛒</div>
-            <div>订单</div>
-        </div>
-        <div class="footer-item">
-            <div class="footer-icon">👤</div>
-            <div>我的</div>
-        </div>
-    </footer>
-    
+    </footer> -->
+
     <script>
-        // 简单的轮播图逻辑，实际项目中可能需要更复杂的实现
-        document.addEventListener('DOMContentLoaded', function() {
-            // 轮播图逻辑可以在这里添加
+        /**
+         * 导航栏功能
+         */
+        document.addEventListener('DOMContentLoaded', function () {
+            // 防止双击放大
+            document.addEventListener('touchstart', function (event) {
+                if (event.touches.length > 1) {
+                    event.preventDefault();
+                }
+            }, { passive: false });
+
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function (event) {
+                const now = Date.now();
+                if (now - lastTouchEnd < 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, { passive: false });
+
+            // 移动端菜单切换
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const navLinks = document.querySelector('.nav-links');
+
+            mobileMenu.addEventListener('click', function () {
+                mobileMenu.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // 导航栏滚动效果
+            const navbar = document.querySelector('.navbar');
+            const scrollDown = document.getElementById('scrollDown');
+
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                    scrollDown.textContent = '回到页面顶部';
+                    scrollDown.querySelector('.arrow').textContent = '↑';
+                } else {
+                    navbar.classList.remove('scrolled');
+                    scrollDown.textContent = '继续探索敦煌之美';
+                    scrollDown.querySelector('.arrow').textContent = '↓';
+                }
+            });
+
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+
+                        // 关闭移动端菜单
+                        if (navLinks.classList.contains('active')) {
+                            mobileMenu.classList.remove('active');
+                            navLinks.classList.remove('active');
+                        }
+                    }
+                });
+            });
+
+            // 滚动按钮功能
+            scrollDown.addEventListener('click', function () {
+                if (window.scrollY > 50) {
+                    // 回到顶部
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    // 滚动到历史部分
+                    const historySection = document.getElementById('history');
+                    if (historySection) {
+                        window.scrollTo({
+                            top: historySection.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+
+            // 删除页面切换功能相关代码
+            /*
+            // 定义所有主要部分
+            const sections = [
+                document.getElementById('home'),
+                document.getElementById('history'),
+                document.getElementById('caves'),
+                document.getElementById('art'),
+                document.getElementById('reviews')
+            ];
+
+            // 部分标题
+            const sectionTitles = [
+                '首页',
+                '历史渊源',
+                '经典洞窟',
+                '艺术特色',
+                '游客留言'
+            ];
+
+            // 当前显示的部分索引
+            let currentSectionIndex = 0;
+
+            // 获取按钮和当前部分标题元素
+            const nextSectionBtn = document.getElementById('nextSectionBtn');
+            const prevSectionBtn = document.getElementById('prevSectionBtn');
+            const currentSectionTitle = document.getElementById('currentSectionTitle');
+            const startExploreBtn = document.getElementById('startExplore');
+
+            // 显示指定部分
+            function showSection(index) {
+                // 隐藏所有部分
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                // 显示当前部分
+                sections[index].classList.add('active');
+
+                // 更新当前部分标题
+                currentSectionTitle.textContent = sectionTitles[index];
+
+                // 更新按钮状态
+                if (index === 0) {
+                    prevSectionBtn.style.display = 'none';
+                } else {
+                    prevSectionBtn.style.display = 'inline-block';
+                }
+
+                if (index === sections.length - 1) {
+                    nextSectionBtn.style.display = 'none';
+                } else {
+                    nextSectionBtn.style.display = 'inline-block';
+                }
+
+                // 更新当前索引
+                currentSectionIndex = index;
+            }
+
+            // 开始探索按钮事件
+            startExploreBtn.addEventListener('click', function () {
+                showSection(1); // 显示历史部分
+            });
+
+            // 下一部分按钮事件
+            nextSectionBtn.addEventListener('click', function () {
+                if (currentSectionIndex < sections.length - 1) {
+                    showSection(currentSectionIndex + 1);
+                }
+            });
+
+            // 上一部分按钮事件
+            prevSectionBtn.addEventListener('click', function () {
+                if (currentSectionIndex > 0) {
+                    showSection(currentSectionIndex - 1);
+                }
+            });
+
+            // 导航链接点击事件，改为显示对应部分而不是滚动
+            document.querySelectorAll('.nav-links a').forEach((link, index) => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    showSection(index);
+
+                    // 关闭移动端菜单
+                    const mobileMenu = document.querySelector('.mobile-menu');
+                    const navLinks = document.querySelector('.nav-links');
+                    if (navLinks.classList.contains('active')) {
+                        mobileMenu.classList.remove('active');
+                        navLinks.classList.remove('active');
+                    }
+                });
+            });
+
+            // 初始化显示首页
+            showSection(0);
+            */
+
+            /**
+             * 洞窟轮播功能
+             */
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.cave-slide');
+            const dots = document.querySelectorAll('.dot');
+            const prevBtn = document.getElementById('prevCave');
+            const nextBtn = document.getElementById('nextCave');
+
+            function showSlide(index) {
+                if (index < 0) {
+                    index = slides.length - 1;
+                } else if (index >= slides.length) {
+                    index = 0;
+                }
+
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+
+                currentSlide = index;
+            }
+
+            prevBtn.addEventListener('click', () => {
+                showSlide(currentSlide - 1);
+            });
+
+            nextBtn.addEventListener('click', () => {
+                showSlide(currentSlide + 1);
+            });
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    showSlide(index);
+                });
+            });
+
+            // 自动轮播
+            let slideInterval = setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 5000);
+
+            // 鼠标悬停时暂停轮播
+            const sliderContainer = document.querySelector('.caves-slider-container');
+
+            sliderContainer.addEventListener('mouseenter', () => {
+                clearInterval(slideInterval);
+            });
+
+            sliderContainer.addEventListener('mouseleave', () => {
+                slideInterval = setInterval(() => {
+                    showSlide(currentSlide + 1);
+                }, 5000);
+            });
+
+            /**
+             * 艺术详情展示功能
+             */
+            const learnMoreBtns = document.querySelectorAll('.learn-more');
+
+            learnMoreBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const target = this.getAttribute('data-target');
+                    const detailsElement = document.getElementById(`${target}-details`);
+
+                    if (detailsElement) {
+                        detailsElement.classList.add('show');
+                    }
+                });
+            });
+
+            // 关闭详情
+            document.querySelectorAll('.art-details').forEach(details => {
+                details.addEventListener('click', function (e) {
+                    if (e.target === this || e.target === this.querySelector('::after')) {
+                        this.classList.remove('show');
+                    }
+                });
+            });
+
+            /**
+             * 视频播放功能
+             */
+            const videoOverlay = document.getElementById('videoOverlay');
+            const video = document.getElementById('mogaoVideo');
+            const playBtn = document.getElementById('playBtn');
+
+            // 检查元素是否存在，避免因为视频区域被移除而导致的错误
+            if (videoOverlay && video) {
+                videoOverlay.addEventListener('click', function () {
+                    video.play();
+                    this.style.display = 'none';
+                });
+
+                video.addEventListener('pause', function () {
+                    videoOverlay.style.display = 'flex';
+                });
+            }
+
+            /**
+             * 评分功能
+             */
+            const stars = document.querySelectorAll('.star');
+            const ratingInput = document.getElementById('rating');
+
+            // 初始化评分为5星
+            stars.forEach(star => {
+                if (parseInt(star.getAttribute('data-rating')) <= 5) {
+                    star.classList.add('active');
+                }
+            });
+
+            stars.forEach(star => {
+                star.addEventListener('click', function () {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    ratingInput.value = rating;
+
+                    // 更新星星显示
+                    stars.forEach(s => {
+                        const starRating = parseInt(s.getAttribute('data-rating'));
+                        if (starRating <= rating) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            /**
+             * 留言板功能
+             */
+            const messageForm = document.getElementById('messageForm');
+            const messageContainer = document.getElementById('messageContainer');
+            const pagination = document.getElementById('pagination');
+            const pageButtons = document.querySelectorAll('.page-btn');
+
+            // 示例留言数据
+            let messages = [
+                {
+                    name: '李明',
+                    rating: 5,
+                    date: '2023-05-10',
+                    content: '莫高窟的壁画和彩塑实在是太震撼了！导游的讲解非常专业，让我更深入地了解了敦煌文化的魅力。唯一的建议是可以增加一些互动体验环节，让参观更加生动有趣。'
+                },
+                {
+                    name: '张华',
+                    rating: 4,
+                    date: '2023-04-22',
+                    content: '第一次来敦煌，被莫高窟的艺术震撼到了。数字展示中心的4K巨幕电影非常棒，让我对敦煌有了更全面的认识。建议大家一定要提前预约，旺季人很多！'
+                },
+                {
+                    name: '王芳',
+                    rating: 5,
+                    date: '2023-03-15',
+                    content: '这是我第二次来莫高窟，每次来都有新的感受。洞窟内壁画的细节非常精美，彩塑的表情栩栩如生。工作人员很热情，讲解也很专业。强烈推荐文化爱好者来参观！'
+                },
+                {
+                    name: '赵强',
+                    rating: 5,
+                    date: '2023-03-05',
+                    content: '莫高窟是中国文化的瑰宝，每个洞窟都让人惊叹。敦煌地区气候干燥，建议大家多带水和防晒用品。导游讲解细致入微，让我对佛教艺术有了全新的理解。'
+                },
+                {
+                    name: '陈静',
+                    rating: 4,
+                    date: '2023-02-18',
+                    content: '冬季来莫高窟游客较少，可以更好地欣赏壁画和彩塑。数字展示中心的展览科技感十足，为实地参观做了很好的铺垫。希望以后能有更多关于敦煌文化的互动体验。'
+                },
+                {
+                    name: '刘伟',
+                    rating: 5,
+                    date: '2023-01-30',
+                    content: '敦煌莫高窟不愧是世界文化遗产，艺术价值无法估量。冬季参观需要注意保暖，洞窟内外温差较大。数字展示中心的高科技展示方式非常震撼，值得花时间仔细观看。'
+                }
+            ];
+
+            // 从本地存储加载留言
+            if (localStorage.getItem('mogaokuMessages')) {
+                const savedMessages = JSON.parse(localStorage.getItem('mogaokuMessages'));
+                messages = [...savedMessages, ...messages];
+            }
+
+            // 每页显示的留言数量
+            const messagesPerPage = 3;
+            let currentPage = 1;
+
+            // 显示留言
+            function displayMessages(page) {
+                const startIndex = (page - 1) * messagesPerPage;
+                const endIndex = startIndex + messagesPerPage;
+                const currentPageMessages = messages.slice(startIndex, endIndex);
+
+                messageContainer.innerHTML = '';
+
+                currentPageMessages.forEach(msg => {
+                    const messageEl = document.createElement('div');
+                    messageEl.className = 'message';
+
+                    const stars = '★'.repeat(msg.rating) + '☆'.repeat(5 - msg.rating);
+
+                    messageEl.innerHTML = `
+                        <div class="message-header">
+                            <div class="message-author">
+                                <h4>${msg.name}</h4>
+                                <div class="message-rating">${stars}</div>
+                            </div>
+                            <div class="message-date">${msg.date}</div>
+                        </div>
+                        <div class="message-content">
+                            <p>${msg.content}</p>
+                        </div>
+                    `;
+
+                    messageContainer.appendChild(messageEl);
+                });
+
+                // 更新分页按钮
+                updatePagination(page);
+            }
+
+            // 更新分页按钮
+            function updatePagination(currentPage) {
+                const totalPages = Math.ceil(messages.length / messagesPerPage);
+                pagination.innerHTML = '';
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const button = document.createElement('button');
+                    button.className = 'page-btn' + (i === currentPage ? ' active' : '');
+                    button.textContent = i;
+                    button.setAttribute('data-page', i);
+
+                    button.addEventListener('click', function () {
+                        const page = parseInt(this.getAttribute('data-page'));
+                        displayMessages(page);
+                    });
+
+                    pagination.appendChild(button);
+                }
+            }
+
+            // 初始化显示第一页留言
+            displayMessages(1);
+
+            // 提交新留言
+            messageForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const name = document.getElementById('name').value;
+                const rating = parseInt(document.getElementById('rating').value);
+                const content = document.getElementById('message').value;
+
+                const today = new Date();
+                const date = today.toISOString().split('T')[0];
+
+                const newMessage = {
+                    name,
+                    rating,
+                    date,
+                    content
+                };
+
+                // 添加到留言列表开头
+                messages.unshift(newMessage);
+
+                // 保存到本地存储
+                localStorage.setItem('mogaokuMessages', JSON.stringify(messages));
+
+                // 更新显示
+                displayMessages(1);
+
+                // 重置表单
+                this.reset();
+
+                // 重新初始化评分为5星
+                document.getElementById('rating').value = 5;
+                stars.forEach(star => {
+                    if (parseInt(star.getAttribute('data-rating')) <= 5) {
+                        star.classList.add('active');
+                    }
+                });
+
+                alert('感谢您的留言！');
+            });
+
+            /**
+             * 图片懒加载
+             */
+            const lazyImages = [].slice.call(document.querySelectorAll('img'));
+
+            if ('IntersectionObserver' in window) {
+                const lazyImageObserver = new IntersectionObserver(function (entries, observer) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            const lazyImage = entry.target;
+                            if (lazyImage.dataset.src) {
+                                lazyImage.src = lazyImage.dataset.src;
+                                lazyImage.removeAttribute('data-src');
+                            }
+                            lazyImageObserver.unobserve(lazyImage);
+                        }
+                    });
+                });
+
+                lazyImages.forEach(function (lazyImage) {
+                    lazyImageObserver.observe(lazyImage);
+                });
+            } else {
+                // Fallback for browsers without IntersectionObserver support
+                lazyImages.forEach(function (lazyImage) {
+                    if (lazyImage.dataset.src) {
+                        lazyImage.src = lazyImage.dataset.src;
+                        lazyImage.removeAttribute('data-src');
+                    }
+                });
+            }
         });
     </script>
 </body>
+
 </html>
