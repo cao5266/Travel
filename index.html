@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅游网站</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* 头部导航 */
+        header {
+            background-color: #3498db;
+            color: white;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .nav-toggle {
+            font-size: 20px;
+        }
+        .search-bar {
+            margin-top: 10px;
+            display: flex;
+        }
+        .search-bar input {
+            width: 80%;
+            padding: 8px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+        }
+        .search-bar button {
+            width: 20%;
+            padding: 8px;
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        /* 轮播图 */
+        .carousel {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+        .carousel-inner {
+            height: 100%;
+        }
+        .carousel-item {
+            height: 100%;
+            display: none;
+        }
+        .carousel-item.active {
+            display: block;
+        }
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        /* 分类导航 */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 15px;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #f1c40f;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        /* 特价商品 */
+        .deals {
+            padding: 15px;
+        }
+        .section-title {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .view-all {
+            color: #3498db;
+            font-size: 14px;
+        }
+        .deals-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .deal-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .deal-image {
+            height: 120px;
+            overflow: hidden;
+        }
+        .deal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .deal-info {
+            padding: 10px;
+        }
+        .deal-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .deal-price {
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .deal-rating {
+            color: #f39c12;
+            margin-bottom: 5px;
+        }
+        .deal-location {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+        
+        /* 热门目的地 */
+        .destinations {
+            padding: 15px;
+        }
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .destination-card {
+            position: relative;
+            height: 150px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .destination-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .destination-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            padding: 10px;
+        }
+        .destination-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .destination-desc {
+            font-size: 12px;
+        }
+        
+        /* 底部导航 */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 10px 0;
+            box-shadow: 0 -1px 3px rgba(0,0,0,0.1);
+        }
+        .footer-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+        }
+        .footer-icon {
+            margin-bottom: 5px;
+            font-size: 20px;
+        }
+        .content {
+            margin-bottom: 60px; /* 为底部导航留出空间 */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <div class="logo">旅游网</div>
+            <div class="nav-toggle">☰</div>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="搜索目的地、酒店、景点...">
+            <button>搜索</button>
+        </div>
+    </header>
+    
+    <div class="content">
+        <div class="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://via.placeholder.com/600x200?text=三亚海滩" alt="三亚海滩">
+                    <div class="carousel-caption">三亚海滩 - 限时特惠</div>
+                </div>
+                <!-- 更多轮播项 -->
+            </div>
+        </div>
+        
+        <div class="categories">
+            <div class="category-item">
+                <div class="category-icon">✈️</div>
+                <div>机票</div>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">🏨</div>
+                <div>酒店</div>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">🎫</div>
+                <div>景点</div>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">🚗</div>
+                <div>租车</div>
+            </div>
+        </div>
+        
+        <div class="deals">
+            <div class="section-title">
+                <h3>限时特惠</h3>
+                <a href="#" class="view-all">查看全部</a>
+            </div>
+            <div class="deals-grid">
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <img src="https://via.placeholder.com/300x150?text=三亚酒店" alt="三亚酒店">
+                    </div>
+                    <div class="deal-info">
+                        <div class="deal-title">三亚海景酒店</div>
+                        <div class="deal-price">¥688/晚</div>
+                        <div class="deal-rating">★★★★☆ 4.8</div>
+                        <div class="deal-location">海南省三亚市</div>
+                    </div>
+                </div>
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <img src="https://via.placeholder.com/300x150?text=丽江古城" alt="丽江古城">
+                    </div>
+                    <div class="deal-info">
+                        <div class="deal-title">丽江古城一日游</div>
+                        <div class="deal-price">¥299/人</div>
+                        <div class="deal-rating">★★★★★ 5.0</div>
+                        <div class="deal-location">云南省丽江市</div>
+                    </div>
+                </div>
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <img src="https://via.placeholder.com/300x150?text=北京故宫" alt="北京故宫">
+                    </div>
+                    <div class="deal-info">
+                        <div class="deal-title">故宫博物院门票</div>
+                        <div class="deal-price">¥120/人</div>
+                        <div class="deal-rating">★★★★☆ 4.7</div>
+                        <div class="deal-location">北京市东城区</div>
+                    </div>
+                </div>
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <img src="https://via.placeholder.com/300x150?text=张家界" alt="张家界">
+                    </div>
+                    <div class="deal-info">
+                        <div class="deal-title">张家界森林公园</div>
+                        <div class="deal-price">¥245/人</div>
+                        <div class="deal-rating">★★★★☆ 4.6</div>
+                        <div class="deal-location">湖南省张家界市</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="destinations">
+            <div class="section-title">
+                <h3>热门目的地</h3>
+                <a href="#" class="view-all">更多</a>
+            </div>
+            <div class="destinations-grid">
+                <div class="destination-card">
+                    <img src="https://via.placeholder.com/300x150?text=北京" alt="北京">
+                    <div class="destination-info">
+                        <div class="destination-name">北京</div>
+                        <div class="destination-desc">历史文化名城，古都风采</div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://via.placeholder.com/300x150?text=上海" alt="上海">
+                    <div class="destination-info">
+                        <div class="destination-name">上海</div>
+                        <div class="destination-desc">现代化国际大都市</div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://via.placeholder.com/300x150?text=广州" alt="广州">
+                    <div class="destination-info">
+                        <div class="destination-name">广州</div>
+                        <div class="destination-desc">美食之都，岭南文化</div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://via.placeholder.com/300x150?text=成都" alt="成都">
+                    <div class="destination-info">
+                        <div class="destination-name">成都</div>
+                        <div class="destination-desc">休闲之都，熊猫之乡</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-item">
+            <div class="footer-icon">🏠</div>
+            <div>首页</div>
+        </div>
+        <div class="footer-item">
+            <div class="footer-icon">🔍</div>
+            <div>发现</div>
+        </div>
+        <div class="footer-item">
+            <div class="footer-icon">🛒</div>
+            <div>订单</div>
+        </div>
+        <div class="footer-item">
+            <div class="footer-icon">👤</div>
+            <div>我的</div>
+        </div>
+    </footer>
+    
+    <script>
+        // 简单的轮播图逻辑，实际项目中可能需要更复杂的实现
+        document.addEventListener('DOMContentLoaded', function() {
+            // 轮播图逻辑可以在这里添加
+        });
+    </script>
+</body>
+</html>
